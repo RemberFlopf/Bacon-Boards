@@ -66,8 +66,7 @@ async function updateBoards(currentData){
         div.classList.add('centre', 'bacon-board')
         div.style.flexDirection = 'column';
 
-
-        document.body.appendChild(div)
+        document.getElementById('baconForm').after(div)
 
         //console.log(object.val())
 
