@@ -66,6 +66,11 @@ async function updateBoards(currentData){
         div.classList.add('centre', 'bacon-board')
         div.style.flexDirection = 'column';
 
+        div.dataset.userId = object.key;
+
+
+        div.addEventListener('mousedown', clearData)
+
         document.getElementById('baconForm').after(div)
 
         //console.log(object.val())
@@ -73,6 +78,24 @@ async function updateBoards(currentData){
         baconTracker++;
 
     })
+
+}
+
+async function clearData(event){
+
+    if (document.getElementById('username').value === 'superSecretAdminUsernameNoOneWillEverFind12345'){
+
+        remove(ref(db, `messages/${event.target.dataset.userId}`)).then(() => {
+
+            console.log("Data deleted succesfully!")
+
+        }).catch((err) => {
+
+            console.error("Data could not be deleted. " + err)
+
+        })
+
+    }
 
 }
 
