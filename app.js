@@ -96,7 +96,7 @@ async function addToBaconChat(){
 
     let chat = document.getElementById('baconChatInput').value.trim();
 
-    if (chat && chat.length < 20){
+    if (chat && chat.length < 60){
 
         set(push(baconChat), {chat : chat, name : document.getElementById('username').value.trim() || "Anonymous"})
 
