@@ -22,11 +22,14 @@ fieldset{
 
     text-align: center;
     flex-direction: column;
-    margin-bottom: 2%;
+    margin-bottom: 3%;
 
 
 }
 
+.bacon-board{
+    margin-top: 20%;
+}
 fieldset div:nth-child(even){
 
     background-color: #b04d4d;
