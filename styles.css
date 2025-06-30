@@ -17,16 +17,12 @@
     align-items: center;
 
 }
-#baconField{
-    position: absolute;
-    top: 8vh;
-}
 
 fieldset{
 
     text-align: center;
     flex-direction: column;
-    margin-bottom: 4%;
+    margin-bottom: 3%;
 
 
 }
@@ -158,3 +154,7 @@ input {
     padding-left: 0.8em;
 }
 
+#baconField{
+    position: absolute;
+    top: 8vh;
+}
