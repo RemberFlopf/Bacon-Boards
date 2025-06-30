@@ -86,6 +86,8 @@ async function updateBaconChat(currentData){
 
         baconChat.scrollTop = baconChat.scrollHeight;
 
+        baconChat.reset()
+
     })
 
 }
