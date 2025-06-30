@@ -81,7 +81,6 @@ input{
 }
 
 #baconChat{
-    position: absolute;
     left: 4vw;
     top: 8vh;
     width: 30vw;
@@ -155,6 +154,5 @@ input {
 }
 
 #baconField{
-    position: absolute;
     top: 8vh;
 }
