@@ -9,7 +9,6 @@
     justify-content: center;
     text-align: center;
 
-
 }
 
 .vCentre{
@@ -17,16 +16,12 @@
     align-items: center;
 
 }
-#baconField{
-    position: absolute;
-    top: 8vh;
-}
 
 fieldset{
 
     text-align: center;
     flex-direction: column;
-    margin-bottom: 2%;
+    margin-bottom: 3%;
 
 
 }
@@ -87,7 +82,7 @@ input{
 #baconChat{
     position: absolute;
     left: 4vw;
-    top: 8vh;
+    top: 3vh;
     width: 30vw;
     height: 40vh;
     overflow-y: auto;
@@ -114,7 +109,7 @@ input{
     position: absolute;
     width: 23vw;
     left: 5.5%;
-    top: 49%;
+    top: 44%;
 
 }
 
@@ -122,7 +117,7 @@ input{
 
     position: absolute;
     left: 30%;
-    top: 49%;
+    top: 44%;
 
 }
 
