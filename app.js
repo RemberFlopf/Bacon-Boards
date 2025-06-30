@@ -140,15 +140,15 @@ async function clearBaconChat(currentData){
 
 let baconTracker = 0;
 
-async function updateBoards(currentData) {
-    document.querySelectorAll('.bacon-board').forEach(b => b.remove());
+async function updateBoards(currentData){
+    const wrapper = document.getElementById('baconBoardWrapper');
+    wrapper.innerHTML = ''; // clear all previous .bacon-board divs
 
-    let hasData = false;
+    baconTracker = 0;
 
     currentData.forEach(object => {
-        hasData = true;
-
         let div = document.createElement('div');
+
         div.innerHTML = `<p>Name : ${object.val().name}</p><p>Choice : ${object.val().choice}</p>`;
         div.style.marginBottom = '1em';
         div.style.marginTop = '1em';
@@ -159,23 +159,10 @@ async function updateBoards(currentData) {
 
         div.addEventListener('mousedown', clearData);
 
-        document.getElementById('baconForm').after(div);
+        wrapper.appendChild(div); // Append to container
 
         baconTracker++;
-    });
-
-    // If no data, show placeholder
-    if (!hasData) {
-        let placeholder = document.createElement('div');
-        placeholder.innerHTML = `<p style="font-style: italic; opacity: 0.7;">No bacon responses yet. Be the first to sizzle!</p>`;
-        placeholder.classList.add('centre', 'bacon-board');
-        placeholder.style.marginTop = '1em';
-        placeholder.style.marginBottom = '1em';
-        placeholder.style.backgroundColor = '#f7e3d0';
-        placeholder.style.flexDirection = 'column';
-
-        document.getElementById('baconForm').after(placeholder);
-    }
+    })
 }
 
 
