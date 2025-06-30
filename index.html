@@ -10,54 +10,68 @@
 </head>
 <body>
 
-    <div id = 'baconChat' class ='border'>
-        <h2 id='title'>Bacon Chat</h2>
+    <div id = 'baconChat' class = 'border'>
+
+        <h2 id = 'title'style="background-color: grey; text-align: center;">Bacon Chat</h2>
+
     </div>
 
     <div>
+
         <form id="baconChatForm">
+
         <input type = 'text' id="baconChatInput" placeholder="What do you have to say about bacon?">
         <input type = 'submit' id ='baconChatSubmit' value="Say">
+
     </form>
 
     </div>
 
 
     <div id ='overallOpinion' class="border centre" style="flex-direction: column;">
+
         <h2>General Bacon Opinion Is:</h2>
-        <h4 id= 'opinion' style="font-size: xx-large;"></h4>
+
+        <h4 id = 'opinion' style="font-size: xx-large;"></h4>
+
     </div>
 
 
     <form id = 'baconForm' class="centre vCentre">
+
         <fieldset class="border centre" id ='baconField'>
-        <legend class="head">Do you like bacon?</legend>
+
+        <legend>Do you like bacon?</legend>
+
         <div class="option">
-            <input type="radio" id='yesBacon' name='baconQuiz' checked></input>
+
+            <input type ="radio" id ='yesBacon' name='baconQuiz' checked></input>
             <label for="yesBacon">Hell Yeah! 😎</label> 
 
         </div>
 
         <div class="option">
 
-            <input type="radio" id ='noBacon' name="baconQuiz"></input>
+            <input type ="radio" id ='noBacon' name="baconQuiz"></input>
             <label for="noBacon">Hell no! 🤮🤢</label>
 
         </div>
 
         <div class="option">
 
-            <input type="radio" id ='maybeBacon' name="baconQuiz"></input>
+            <input type ="radio" id ='maybeBacon' name="baconQuiz"></input>
             <label for="maybeBacon">I'm not opposed to the idea. 🚳</label>
 
         </div>
+
         <input type="text" id='username' placeholder="Name: " required>
+        
         <input type ='submit' id='submit' value='My answer is the best answer!'></input>
+
         </fieldset>
 
 
     </form>
-    <div id="baconBoardWrapper" class="bacon-board-wrapper"></div>
 
     <script type="module" src="app.js"></script>
     

@@ -141,30 +141,35 @@ async function clearBaconChat(currentData){
 let baconTracker = 0;
 
 async function updateBoards(currentData){
-    const wrapper = document.getElementById('baconBoardWrapper');
-    wrapper.innerHTML = ''; // clear all previous .bacon-board divs
 
-    baconTracker = 0;
+    document.querySelectorAll('.bacon-board').forEach(b => b.remove())
 
     currentData.forEach(object => {
+
         let div = document.createElement('div');
 
         div.innerHTML = `<p>Name : ${object.val().name}</p><p>Choice : ${object.val().choice}</p>`;
+
         div.style.marginBottom = '1em';
-        div.style.marginTop = '1em';
+        div.style.marginTop = '1em'
         div.style.backgroundColor = baconTracker % 2 === 0 ? '#e1b28b' : '#f2c6ba';
-        div.classList.add('centre', 'bacon-board');
+        div.classList.add('centre', 'bacon-board')
         div.style.flexDirection = 'column';
+
         div.dataset.userId = object.key;
 
-        div.addEventListener('mousedown', clearData);
 
-        wrapper.appendChild(div); // Append to container
+        div.addEventListener('mousedown', clearData)
+
+        document.getElementById('baconForm').after(div)
+
+        //console.log(object.val())
 
         baconTracker++;
-    })
-}
 
+    })
+
+}
 
 async function clearData(event){
 
