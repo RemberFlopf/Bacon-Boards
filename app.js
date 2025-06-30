@@ -30,6 +30,26 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app, "https://chat-app-test-bb975-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
 const messages = ref(db, 'messages')
+const baconChat = ref(db, 'baconChat')
+
+document.getElementById('baconChatForm').addEventListener('submit', (e) => {e.preventDefault(); addToBaconChat()})
+
+onValue(baconChat, (message) => {
+
+    if (message.exists()){
+
+        updateBaconChat(message)
+        clearBaconChat(message)
+
+    }
+
+    else{
+
+        console.log("bacon not found!")
+
+    }
+
+})
 
 onValue(messages, (message) => {
 
@@ -37,6 +57,7 @@ onValue(messages, (message) => {
 
         updateBoards(message)
         checkDuplicateData(message)
+        baconOpinion(message)
 
     }
 
@@ -47,6 +68,53 @@ onValue(messages, (message) => {
     }
 
 })
+
+async function updateBaconChat(currentData){
+
+    document.querySelectorAll('.bacon-Chat').forEach(p => p.remove())
+
+    currentData.forEach(object => {
+
+        let baconChat = document.getElementById('baconChat');
+
+        let p = document.createElement('p')
+
+        p.textContent = `${object.val().name} : ${object.val().chat}`;
+        p.classList.add('bacon-Chat')
+
+        baconChat.appendChild(p)
+
+        baconChat.scrollTop = baconChat.scrollHeight;
+
+    })
+
+}
+
+async function addToBaconChat(){
+
+    let chat = document.getElementById('baconChatInput').value.trim();
+
+    set(push(baconChat), {chat : chat, name : document.getElementById('username').value.trim() || "Anonymous"})
+
+}
+
+async function clearBaconChat(currentData){
+
+    if (Object.keys(currentData.val()).length > 150){
+
+        remove(baconChat).then(() => {
+
+            alert("Chat too long! Deleting contents...")
+
+        }).catch(() => {
+
+            console.error("Something went wrong. Chat could not be deleted.")
+
+        })
+
+    }
+
+}
 
 let baconTracker = 0;
 
@@ -96,6 +164,43 @@ async function clearData(event){
         })
 
     }
+
+}
+
+async function baconOpinion(currentData) {
+
+    const baconOpinions = ['Crispy! 🥓', 'Sizzling! 🍳', 'Warming up! 🔥', 'Bacon. 🚳', 'A bit chilly! 😎', 'Undercooked! 😭', 'Raw! 🤢🤮']
+    let overallBaconOpinion = 3;
+    
+    let opinionText = document.getElementById('opinion');
+
+    currentData.forEach(object => {
+
+        switch(object.val().choice){
+
+            case "Hell Yeah! 😎":
+
+                overallBaconOpinion --;
+                break;
+
+            case "Hell no! 🤮🤢":
+
+                overallBaconOpinion ++;
+                break;
+
+            default:
+                break;
+
+        }
+
+    })
+
+    overallBaconOpinion = Math.max(0, Math.min(baconOpinions.length - 1, overallBaconOpinion))
+
+    opinionText.textContent = baconOpinions[overallBaconOpinion];
+
+    console.log(overallBaconOpinion, baconOpinions)
+
 
 }
 
