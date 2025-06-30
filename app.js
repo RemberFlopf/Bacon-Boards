@@ -136,7 +136,7 @@ async function updateBoards(currentData){
 
         div.style.marginBottom = '1em';
         div.style.marginTop = '1em'
-        div.style.backgroundColor = baconTracker % 2 === 0 ? 'lightgray' : 'gray';
+        div.style.backgroundColor = baconTracker % 2 === 0 ? '#fdfbee' : '#f2c6ba';
         div.classList.add('centre', 'bacon-board')
         div.style.flexDirection = 'column';
 
