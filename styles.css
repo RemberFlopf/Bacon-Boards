@@ -1,9 +1,14 @@
 .centre{
 
     display: flex;
-    align-items: center;
     justify-content: center;
     text-align: center;
+
+}
+
+.vCentre{
+
+    align-items: center;
 
 }
 
@@ -11,6 +16,7 @@ fieldset{
 
     text-align: center;
     flex-direction: column;
+    margin-bottom: 3%;
 
 
 }
@@ -50,6 +56,70 @@ input{
 #username{
 
     border-color: lightgrey;
+
+}
+
+#overallOpinion{
+
+    position: absolute;
+    left: 66vw;
+    top: 8vh;
+    width: 30vw;
+    height: 30vh;
+
+}
+
+#baconChat{
+
+    position: absolute;
+    left: 4vw;
+    top: 3vh;
+    width: 30vw;
+    height: 40vh;
+    overflow-y: auto;
+    flex-direction: column;
+    gap : 5px;
+
+}
+
+#baconChat p {
+
+    margin: 0% 0% 0% 2%;
+    padding: 0%;
+
+}
+
+#baconChat :nth-child(odd){
+
+    background-color: aqua;
+
+}
+
+#baconChatInput{
+
+    position: absolute;
+    width: 23vw;
+    left: 5.5%;
+    top: 44%;
+
+}
+
+#baconChatSubmit{
+
+    position: absolute;
+    left: 30%;
+    top: 44%;
+
+}
+
+#title{
+
+    box-sizing: border-box;
+    width: 100%;
+    height: 20%;
+    border-bottom: 3px black double;
+    margin-top: 0%;
+    padding-top: 0%;
 
 }
 
