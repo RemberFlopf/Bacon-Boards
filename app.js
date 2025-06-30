@@ -94,13 +94,29 @@ async function updateBaconChat(currentData){
 
 async function addToBaconChat(){
 
-    let chat = document.getElementById('baconChatInput').value.trim();
+    let username = document.getElementById('username');
+    let text = document.getElementById('baconChatInput');
 
-    if (chat && chat.length < 60 && document.getElementById('username').value.trim().length < 25){
+    let chat = text.value.trim();
 
-        set(push(baconChat), {chat : chat, name : document.getElementById('username').value.trim() || "Anonymous"})
+    if (!chat || chat.length > 60){
+
+        text.style.borderColor = 'red';
+        return;
 
     }
+
+    if (username.value.trim().length > 25){
+
+        username.style.borderColor = 'red';
+        return;
+
+    }
+
+    username.style.borderColor = '#d69286';
+    text.style.borderColor = '#d69286';
+
+    set(push(baconChat), {chat : chat, name : document.getElementById('username').value.trim() || "Anonymous"})
 
 }
 
@@ -136,7 +152,7 @@ async function updateBoards(currentData){
 
         div.style.marginBottom = '1em';
         div.style.marginTop = '1em'
-        div.style.backgroundColor = baconTracker % 2 === 0 ? '#fdfbee' : '#f2c6ba';
+        div.style.backgroundColor = baconTracker % 2 === 0 ? 'lightgray' : 'gray';
         div.classList.add('centre', 'bacon-board')
         div.style.flexDirection = 'column';
 
