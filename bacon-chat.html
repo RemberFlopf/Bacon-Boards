@@ -178,6 +178,13 @@
     input.addEventListener('input', () => {
         if (input.value.includes("🥓")) {
         document.body.classList.add('spin-mode');
+
+            setTimeout(() => {
+
+                document.body.classList.remove('spin-mode');
+                      
+            }, 3000)
+            
         } else {
         document.body.classList.remove('spin-mode');
         }
