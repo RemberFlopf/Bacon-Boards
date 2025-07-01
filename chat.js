@@ -51,12 +51,21 @@ async function updateBaconChat(currentData){
 
         let baconChat = document.getElementById('chatMessages');
 
-        let p = document.createElement('p')
+        let div = document.createElement('div');
+        div.classList.add('baconMessage');
 
-        p.textContent = `${object.val().name} : ${object.val().chat}`;
+        div.innerHTML = `
+        <span class="emoji">🥓</span>
+        <div class="messageContent">
+            <strong class="baconName">${object.val().name}</strong>
+            <p class="baconText">${object.val().chat}</p>
+        </div>
+        `;
+
+
         p.classList.add('bacon-Chat')
 
-        baconChat.appendChild(p)
+        baconChat.appendChild(div);
 
         baconChat.scrollTop = baconChat.scrollHeight;
 
