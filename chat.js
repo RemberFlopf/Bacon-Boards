@@ -62,9 +62,6 @@ async function updateBaconChat(currentData){
         </div>
         `;
 
-
-        p.classList.add('bacon-Chat')
-
         baconChat.appendChild(div);
 
         baconChat.scrollTop = baconChat.scrollHeight;
