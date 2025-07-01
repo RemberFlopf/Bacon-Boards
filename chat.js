@@ -49,7 +49,7 @@ async function updateBaconChat(currentData){
 
     currentData.forEach(object => {
 
-        let baconChat = document.getElementById('baconChat');
+        let baconChat = document.getElementById('chatMessages');
 
         let p = document.createElement('p')
 
