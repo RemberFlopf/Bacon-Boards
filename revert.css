@@ -29,8 +29,9 @@
 
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     gap : 70px;
+    margin: 2vh 0 0 1.5vw;
     
 
 }
@@ -38,7 +39,6 @@
 fieldset{
 
     flex-direction: column;
-    margin-bottom: 3%;
 
 }
 
@@ -89,8 +89,6 @@ fieldset div:nth-child(even){
     height: 40vh;
     overflow-y: auto;
     flex-direction: column;
-    gap : 5px;
-    margin: 2vh 0 0 1.5vw;
 
 }
 
@@ -121,8 +119,8 @@ fieldset div:nth-child(even){
     width: 100%;
     height: 20%;
     border-bottom: 4px #b04d4d solid;
-    margin-top: 0%;
     padding-top: 3%;
+    margin: 0%;
     background-color: grey; 
     text-align: center;
 
