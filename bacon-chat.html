@@ -68,6 +68,15 @@
             font-size: 2.5em;
             margin: 0;
         }
+        @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+        }
+
+        .spin-animation {
+        animation: spin 0.5s ease-in-out 1; /* spins twice */
+        }
+
         .bacon-chat-area {
             margin-left: 90px;
             margin-top: 8vh;
@@ -117,7 +126,7 @@
         <nav>
             <div class="line">
                 <div class="logo">
-                    <h1 class="emoji-logo">🥓</h1>
+                    <h1 class="emoji-logo" onclick="">🥓</h1>
                 </div>
             </div>
             <div class="Chat">
@@ -135,5 +144,17 @@
             </form>
         </div>
     </div>
+<script>
+    const emoji = document.querySelector('.emoji-logo');
+    emoji.addEventListener('click', () => {
+        // Remove the class if it’s already there to restart animation
+        emoji.classList.remove('spin-animation');
+        // Trigger reflow to restart the animation
+        void emoji.offsetWidth;
+        // Add the class back to start the animation
+        emoji.classList.add('spin-animation');
+    });
+</script>
+
 </body>
 </html>
