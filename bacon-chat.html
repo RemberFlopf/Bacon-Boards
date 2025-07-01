@@ -57,6 +57,14 @@
             justify-content: center;
             align-items: center;
         }
+        @keyframes baconPop {
+        0%   { transform: scale(1); }
+        30%  { transform: scale(1.25); }
+        100% { transform: scale(1); }
+        }
+        .Chat:hover{
+             animation: baconPop 0.5s ease-in-out 1;
+        }
         .line {
             border-bottom: 2px solid #d69286;
             padding-bottom: 10px;
@@ -76,6 +84,8 @@
         .spin-animation {
         animation: spin 0.5s ease-in-out 1; /* spins twice */
         }
+
+
 
         .bacon-chat-area {
             margin-left: 90px;
@@ -118,6 +128,15 @@
         #baconChatSubmit:hover {
             background-color: #d69286;
         }
+        @keyframes spinForever {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+        }
+
+        .spin-mode * {
+        animation: spinForever 1s linear infinite;
+        }
+
     </style>
 </head>
 <body>
@@ -154,7 +173,16 @@
         // Add the class back to start the animation
         emoji.classList.add('spin-animation');
     });
-</script>
+      const input = document.getElementById('baconChatInput');
+
+    input.addEventListener('input', () => {
+        if (input.value.includes("🥓")) {
+        document.body.classList.add('spin-mode');
+        } else {
+        document.body.classList.remove('spin-mode');
+        }
+    });
+    </script>
 
 </body>
 </html>
