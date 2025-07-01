@@ -34,6 +34,14 @@ const baconChat = ref(db, 'baconChat')
 
 document.getElementById('baconChatForm').addEventListener('submit', (e) => {e.preventDefault(); addToBaconChat()})
 
+if (!JSON.parse(sessionStorage.getItem('baconSeen'))){
+
+    console.log("no bacon")
+
+    baconOfDay()    
+
+}
+
 onValue(baconChat, (message) => {
 
     if (message.exists()){
@@ -68,6 +76,27 @@ onValue(messages, (message) => {
     }
 
 })
+
+async function baconOfDay(){
+
+    console.log('bacon')
+
+    //sessionStorage.setItem('baconSeen', true);
+
+    let div = document.createElement('div');
+
+    div.innerHTML = `
+
+    <h2>Bacon Of The Day:</h2>
+    
+    <img src = 'bacon-images/bacon-${Math.ceil(Math.random()*9)}.jpg' width = 300em height = 300em>
+
+    `
+
+    document.body.appendChild(div)
+
+
+}
 
 async function updateBaconChat(currentData){
 
@@ -149,19 +178,16 @@ async function updateBoards(currentData){
         let div = document.createElement('div');
 
         div.innerHTML = `<p>Name : ${object.val().name}</p><p>Choice : ${object.val().choice}</p>`;
-
-        div.style.marginBottom = '1em';
-        div.style.marginTop = '1em'
-        div.style.backgroundColor = baconTracker % 2 === 0 ? '#e1b28b' : '#f2c6ba';
         div.classList.add('centre', 'bacon-board')
-        div.style.flexDirection = 'column';
 
+        div.style.backgroundColor = baconTracker % 2 === 0 ? '#e1b28b' : '#f2c6ba';
+        
         div.dataset.userId = object.key;
 
 
         div.addEventListener('mousedown', clearData)
 
-        document.getElementById('baconForm').after(div)
+        document.querySelector('.baconChatWrapper').after(div)
 
         //console.log(object.val())
 
