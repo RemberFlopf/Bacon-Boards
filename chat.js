@@ -96,7 +96,7 @@ async function addToBaconChat(){
 
 async function clearBaconChat(currentData){
 
-    if (Object.keys(currentData.val()).length > 150){
+    if (Object.keys(currentData.val()).length > 1500){
 
         remove(baconChat).then(() => {
 
