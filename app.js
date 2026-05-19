@@ -30,13 +30,13 @@ const db = getDatabase(app, "https://chat-app-test-bb975-default-rtdb.asia-south
 
 const messages = ref(db, 'messages')
 
-if (!JSON.parse(sessionStorage.getItem('baconSeen'))){
+/*if (!JSON.parse(sessionStorage.getItem('baconSeen'))){
 
     console.log("no bacon")
 
-    baconOfDay()    
+    //baconOfDay()    
 
-}
+}*/
 
 onValue(messages, (message) => {
 
@@ -56,7 +56,7 @@ onValue(messages, (message) => {
 
 })
 
-async function baconOfDay(){
+/*async function baconOfDay(){
 
     console.log('bacon')
 
@@ -75,7 +75,7 @@ async function baconOfDay(){
     document.body.appendChild(div)
 
 
-}
+}*/
 
 let baconTracker = 0;
 
