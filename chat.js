@@ -49,24 +49,18 @@ async function updateBaconChat(currentData){
 
     currentData.forEach(object => {
 
-        let baconChat = document.getElementById('chatMessages');
+        let baconChat = document.getElementById('baconChat');
 
-        let div = document.createElement('div');
-        div.classList.add('baconMessage');
+        let p = document.createElement('p')
 
-        div.innerHTML = `
-        <span class="emoji">🥓</span>
-        <div class="messageContent">
-            <strong class="baconName">${object.val().name}</strong>
-            <p class="baconText">${object.val().chat}</p>
-        </div>
-        `;
+        p.textContent = `${object.val().name} : ${object.val().chat}`;
+        p.classList.add('bacon-Chat')
 
-        baconChat.appendChild(div);
+        baconChat.appendChild(p)
 
         baconChat.scrollTop = baconChat.scrollHeight;
 
-        document.getElementById('baconChatInput').value = ''
+        document.getElementById('baconChatForm').reset()
 
     })
 
@@ -79,7 +73,7 @@ async function addToBaconChat(){
 
     let chat = text.value.trim();
 
-    if (!chat || chat.length > 150){
+    if (!chat || chat.length > 60){
 
         text.style.borderColor = 'red';
         return;
