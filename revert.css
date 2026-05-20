@@ -83,23 +83,51 @@ fieldset div:nth-child(even){
 
 }
 
+img{
+
+    max-height: 300px;
+
+}
+
+#back{
+
+    position: absolute;
+    padding: 0.5%;
+    border-radius: 40%;
+
+}
+
+#space{
+
+    min-width: 28vw;
+
+}
+
+#baconChatSubmit{
+
+    font-size: x-large;
+    padding: 1%;
+
+}
+
 #baconChat{
 
-    width: 30vw;
-    height: 40vh;
+    width: 98vw;
+    height: 80vh;
     overflow-y: auto;
     flex-direction: column;
+    overflow-x: hidden;
 
 }
 
-#baconChat p {
+#baconChat div {
 
-    margin: 0% 0% 0% 2%;
-    padding: 0%;
+    margin: 0%;
+    padding: 0% 0% 0% 2%;
 
 }
 
-#baconChat :nth-child(odd){
+#baconChat :nth-child(odd):not(b){
 
     background-color:#f2c6ba;
 
@@ -107,7 +135,8 @@ fieldset div:nth-child(even){
 
 #baconChatInput{
 
-    width: 23vw;
+    width: 50vw;
+    height : 10vh;
     margin-left: 2vw;
 
 }
@@ -133,11 +162,50 @@ body{
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-input {
+input:not(#upload) {
     border-radius: 10px;
     outline: none;
     overflow: hidden;
     border: 2px solid #d69286;
     padding-left: 0.8em;
     margin: 10px 5px 5px 10px;
+}
+
+#upload{
+
+    display : none;
+
+}
+
+#label{
+
+    background-color: rgb(255, 189, 149);
+    border: 2px solid #d69286;
+    padding: 0% 0.5% 0% 0.5%;
+    font-size: xx-large;
+    border-radius: 10px;
+    outline: none;
+    overflow: hidden;
+
+}
+
+#link{
+
+    font-size: x-large;
+    position: absolute;
+    top: 22%;
+    left : 8%;
+
+}
+
+#label:hover{
+
+    background-color: rgb(255, 199, 164);
+
+}
+
+#label:active{
+
+    background-color: rgb(255, 176, 127);
+
 }

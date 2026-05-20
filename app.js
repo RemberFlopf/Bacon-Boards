@@ -97,7 +97,7 @@ async function updateBoards(currentData){
 
         div.addEventListener('mousedown', clearData)
 
-        document.querySelector('.baconChatWrapper').after(div)
+        document.querySelector('#link').after(div)
 
         //console.log(object.val())
 

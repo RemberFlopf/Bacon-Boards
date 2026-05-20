@@ -50,19 +50,61 @@ async function updateBaconChat(currentData){
     currentData.forEach(object => {
 
         let baconChat = document.getElementById('baconChat');
+        let p = document.createElement('div')
 
-        let p = document.createElement('p')
+        if (object.val().type === 'image'){
 
-        p.textContent = `${object.val().name} : ${object.val().chat}`;
-        p.classList.add('bacon-Chat')
+            let img = new Image();
+            
+            img.src = object.val().chat;
 
+
+            p.innerHTML = `<b>${object.val().name}</b> : `;
+
+            p.appendChild(img);
+
+        }
+
+        else{
+
+            p.innerHTML = `<b>${object.val().name}</b> : ${object.val().chat}`;
+
+        }
+
+
+        //p.classList.add('bacon-ChatA')
         baconChat.appendChild(p)
-
         baconChat.scrollTop = baconChat.scrollHeight;
 
-        document.getElementById('baconChatForm').reset()
+    })
+
+}
+
+function encodeImageFile(){
+
+    let upload = document.querySelector('#upload');
+    let fileEncoded = null;
+
+    upload.addEventListener('change', () => {
+
+        let file = upload?.files?.[0];
+
+        if (typeof file !== 'undefined'){
+
+            let reader = new FileReader();
+            reader.onloadend = function(){
+
+                fileEncoded = reader.result;
+                set(push(baconChat), {chat : fileEncoded, name : document.getElementById('username').value.trim() || "Anonymous", type : 'image'})
+
+            }
+
+            reader.readAsDataURL(file);
+
+        }
 
     })
+
 
 }
 
@@ -90,7 +132,9 @@ async function addToBaconChat(){
     username.style.borderColor = '#d69286';
     text.style.borderColor = '#d69286';
 
-    set(push(baconChat), {chat : chat, name : document.getElementById('username').value.trim() || "Anonymous"})
+    set(push(baconChat), {chat : chat, name : document.getElementById('username').value.trim() || "Anonymous", type : 'text'})
+
+    document.getElementById('baconChatForm').reset()
 
 }
 
@@ -111,3 +155,5 @@ async function clearBaconChat(currentData){
     }
 
 }
+
+encodeImageFile();
