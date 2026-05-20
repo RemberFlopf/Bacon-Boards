@@ -25,6 +25,16 @@ const baconChat = ref(db, 'baconChat')
 
 document.getElementById('baconChatForm').addEventListener('submit', (e) => {e.preventDefault(); addToBaconChat()})
 
+document.addEventListener('keyup', (event) => {
+
+    if (event.key === 'Enter'){
+
+        addToBaconChat();
+
+    }
+
+})
+
 onValue(baconChat, (message) => {
 
     if (message.exists()){
