@@ -26,7 +26,7 @@ const db = getDatabase(app, "wss://chat-app-test-bb975-default-rtdb.asia-southea
 const auth = getAuth(app);
 const baconChat = ref(db, 'baconChat')
 
-logIn();
+loadRealPage();
 
 function logIn(){
 
@@ -57,7 +57,7 @@ if (isSignInWithEmailLink(auth, window.location.href)){
     let emailLoggedIn = localStorage.getItem('baconChatEmail');
     let userLoggedIn = localStorage.getItem('baconChatUsername')
 
-    signInWithEmailLink(auth, emailLoggedIn, window.location.href).then((result) => {
+    signInWithEmailLink(auth, emailLoggedIn, window.location.href).then(async (result) => {
 
         let existing = {};
 
@@ -66,16 +66,15 @@ if (isSignInWithEmailLink(auth, window.location.href)){
             if (doc.exists()){
 
                 existing = doc.val();
+                existing[result.user.uid] = ({username : userLoggedIn, email : emailLoggedIn});
+
+                set(ref(db, 'users'), existing);
+
+                loadRealPage();
 
             }
 
         })
-
-        existing[result.user.uid] = ({username : userLoggedIn, email : emailLoggedIn});
-
-        set(ref(db, 'users'), existing);
-
-        loadRealPage();
 
     })
 
