@@ -226,7 +226,7 @@ async function updateBaconChat(currentData){
 
     console.log(viewing);
 
-    if (currentData.val().name !== document.querySelector('#username').value.trim() && !viewing){
+    if (!viewing){
 
         console.log('attemping to play sound')
 
