@@ -49,6 +49,13 @@ fieldset div:nth-child(even){
 
 }
 
+#register{
+
+    width: 100vw;
+    height : 100vh;
+
+}
+
 .option{
 
     display: flex;
@@ -117,6 +124,13 @@ img{
     overflow-y: auto;
     flex-direction: column;
     overflow-x: hidden;
+    display: none;
+
+}
+
+.baconChatWrapper{
+
+    display: none;
 
 }
 

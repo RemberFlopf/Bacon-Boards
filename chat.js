@@ -1,5 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+import { getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink  } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 import { getDatabase, ref, push, set, get, remove, onValue, onChildAdded, limitToLast, query } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+
 
 const firebaseConfig = {
 
@@ -21,7 +23,102 @@ const app = initializeApp(firebaseConfig);
 
 const db = getDatabase(app, "wss://chat-app-test-bb975-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
+const auth = getAuth(app);
 const baconChat = ref(db, 'baconChat')
+
+logIn();
+
+function logIn(){
+
+    get(ref(db, 'users')).then(doc => {
+
+        if (doc.exists()){
+
+            let emailLoggedIn = localStorage.getItem('baconChatEmail');
+            let userLoggedIn = localStorage.getItem('baconChatUsername');
+
+            doc.val().forEach(user => {
+
+                if (user.username === userLoggedIn && user.email === emailLoggedIn){
+
+                    console.log('logged in yay');
+                    loadRealPage();
+
+                }
+
+            })
+
+        }
+
+    })
+
+}
+
+if (isSignInWithEmailLink(auth, window.location.href)){
+
+    let emailLoggedIn = localStorage.getItem('baconChatEmail');
+    let userLoggedIn = localStorage.getItem('baconChatUsername')
+
+    signInWithEmailLink(auth, emailLoggedIn, window.location.href).then((result) => {
+
+        let existing = new Array();
+
+        get(ref(db, 'users')).then(doc => {
+
+            if (doc.exists()){
+
+                existing = doc.val();
+
+            }
+
+        })
+
+        existing.push({username : userLoggedIn, email : emailLoggedIn});
+
+        set(ref(db, 'users'), existing);
+
+        loadRealPage();
+
+    })
+
+}
+
+document.getElementById('submit').addEventListener('click', (event) => {
+
+    event.preventDefault();
+
+    const actionCodeSettings = {
+
+        url : 'https://bacon-boards.onrender.com/chat.html',
+        handleCodeInApp: true,
+        iOS: {
+            bundleId: 'com.example.ios'
+        },
+        android: {
+            packageName: 'com.example.android',
+            installApp: true,
+            minimumVersion: '12'
+        },
+
+    }
+
+    let email = document.querySelector('#email').value.trim();
+
+    sendSignInLinkToEmail(auth, email, actionCodeSettings).then(() => {
+
+        localStorage.setItem("baconChatEmail", email);
+        localStorage.setItem('baconChatUsername', document.querySelector('#usernameRegister').value.trim());
+
+        console.log('Sent sign in link successfully!')
+        document.querySelector('#check').style.display = 'inline';
+
+    }).catch(err => {
+
+        console.warn('Could not send sign in link!' + err.code + err.message);
+
+    })
+
+})
 
 let viewing = true;
 let notif = new Audio('./notif.wav');
@@ -38,12 +135,12 @@ document.addEventListener('keyup', (event) => {
 
 })
 
-onChildAdded(query(baconChat, limitToLast(100)), (message) => {
+onChildAdded(query(baconChat, limitToLast(1000)), (message) => {
 
     if (message.exists()){
 
         updateBaconChat(message)
-        clearBaconChat(message)
+        //clearBaconChat(message)
 
     }
 
@@ -56,7 +153,25 @@ onChildAdded(query(baconChat, limitToLast(100)), (message) => {
 })
 
 
+function loadRealPage(){
+
+    document.querySelector('#register').style.display = 'none';
+    document.querySelectorAll('#baconChat, .baconChatWrapper').forEach(item => {
+
+        item.style.display = 'flex';
+
+    })
+
+}
+
 async function updateBaconChat(currentData){
+
+    if (currentData.val().name === 'System'){
+
+        remove(currentData.ref);
+        console.log('removing miles hedrick');
+
+    }
 
     document.querySelectorAll('.bacon-Chat').forEach(p => p.remove())
 
@@ -80,7 +195,8 @@ async function updateBaconChat(currentData){
 
         img.loading = 'lazy';
 
-        p.innerHTML = `<b>${currentData.val().name}</b> : `;
+        p.textContent = `${currentData.val().name} : `;
+        p.style.fontWeight = 700;
 
         p.appendChild(img);
 
@@ -88,13 +204,26 @@ async function updateBaconChat(currentData){
 
     else{
 
-        p.innerHTML = `<b>${currentData.val().name}</b> : ${currentData.val().chat}`;
+        let name = document.createElement('b');
+        let text = document.createElement('p');
+
+
+        text.textContent = currentData.val().chat;
+        text.style.display = 'inline';
+        name.style.display = 'inline';
+
+        name.textContent = currentData.val().name + ' : ';
+
+        p.appendChild(name);
+        p.appendChild(text);
 
     }
 
     //p.classList.add('bacon-ChatA')
     baconChat.appendChild(p)
     baconChat.scrollTop = baconChat.scrollHeight;
+
+    console.log(viewing);
 
     if (currentData.val().name !== document.querySelector('#username').value.trim() && !viewing){
 
@@ -139,6 +268,8 @@ async function addToBaconChat(){
     let username = document.getElementById('username');
     let text = document.getElementById('baconChatInput');
 
+    console.log(username);
+
     let user = username.value.trim();
 
     let chat = text.value.trim();
@@ -167,11 +298,11 @@ async function addToBaconChat(){
 
 }
 
-async function clearBaconChat(currentData){
+/*async function clearBaconChat(currentData){
 
-    if (Object.keys(currentData.val()).length > 1500){
+    if (Object.keys(currentData.val()).length > ){
 
-        remove(baconChat).then(() => {
+        .then(() => {
 
             alert("Chat too long! Deleting contents...")
 
@@ -181,9 +312,10 @@ async function clearBaconChat(currentData){
 
         })
 
+
     }
 
-}
+}*/
 
 function notfiy(){
 
