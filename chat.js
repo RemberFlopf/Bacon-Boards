@@ -126,7 +126,7 @@ let notif = new Audio('./notif.wav');
 
 document.getElementById('baconChatForm').addEventListener('submit', (e) => {e.preventDefault(); addToBaconChat()})
 
-document.addEventListener('keyup', (event) => {
+/*document.addEventListener('keyup', (event) => {
 
     if (event.key === 'Enter'){
 
@@ -134,7 +134,7 @@ document.addEventListener('keyup', (event) => {
 
     }
 
-})
+})*/
 
 onChildAdded(query(baconChat, limitToLast(1000)), (message) => {
 
@@ -167,12 +167,12 @@ function loadRealPage(){
 
 async function updateBaconChat(currentData){
 
-    if (currentData.val().name === 'System'){
+    /*if (currentData.val().name === 'System'){
 
         remove(currentData.ref);
         console.log('removing miles hedrick');
 
-    }
+    }*/
 
     document.querySelectorAll('.bacon-Chat').forEach(p => p.remove())
 
@@ -292,13 +292,11 @@ async function addToBaconChat(){
    // username.style.borderColor = '#d69286';
     text.style.borderColor = '#d69286';
 
-    await get(ref(db, 'users')).then(doc => {
+    get(ref(db, 'users')).then(doc => {
 
         if (doc.exists()){
 
             let username = doc.val()[auth.currentUser.uid].username;
-
-            console.log('double send?')
 
             set(push(baconChat), {chat : chat, name : username || "Anonymous", type : 'text'})
 
