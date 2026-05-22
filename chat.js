@@ -37,7 +37,7 @@ function logIn(){
             let emailLoggedIn = localStorage.getItem('baconChatEmail');
             let userLoggedIn = localStorage.getItem('baconChatUsername');
 
-            let user = doc.val()[auth.currentUser.uid]
+            let user = doc.val()[auth.currentUser.uid];
 
             if (user.username === userLoggedIn && user.email === emailLoggedIn){
 
@@ -292,7 +292,20 @@ async function addToBaconChat(){
    // username.style.borderColor = '#d69286';
     text.style.borderColor = '#d69286';
 
-    set(push(baconChat), {chat : chat, name : localStorage.getItem('') || "Anonymous", type : 'text'})
+    let username;
+
+    await get(ref(db, 'users')).then(doc => {
+
+        if (doc.exists()){
+
+            username = doc.val()[auth.currentUser.uid].username;
+
+        }
+
+    })
+
+
+    set(push(baconChat), {chat : chat, name : username || "Anonymous", type : 'text'})
 
     document.getElementById('baconChatInput').value = '';
     //document.getElementById('baconChatForm').reset()

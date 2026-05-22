@@ -152,6 +152,7 @@ img{
     width: 50vw;
     height : 10vh;
     margin-left: 2vw;
+    display: inline;
 
 }
 
@@ -200,6 +201,7 @@ input:not(#upload) {
     border-radius: 10px;
     outline: none;
     overflow: hidden;
+    display: inline;
 
 }
 
