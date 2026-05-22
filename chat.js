@@ -26,7 +26,7 @@ const db = getDatabase(app, "wss://chat-app-test-bb975-default-rtdb.asia-southea
 const auth = getAuth(app);
 const baconChat = ref(db, 'baconChat')
 
-loadRealPage();
+logIn();
 
 function logIn(){
 
