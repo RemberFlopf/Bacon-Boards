@@ -37,16 +37,14 @@ function logIn(){
             let emailLoggedIn = localStorage.getItem('baconChatEmail');
             let userLoggedIn = localStorage.getItem('baconChatUsername');
 
-            doc.val().forEach(user => {
+            let user = doc.val()[auth.currentUser.uid]
 
-                if (user.username === userLoggedIn && user.email === emailLoggedIn){
+            if (user.username === userLoggedIn && user.email === emailLoggedIn){
 
-                    console.log('logged in yay');
-                    loadRealPage();
+                console.log('logged in yay');
+                loadRealPage();
 
-                }
-
-            })
+            }
 
         }
 
@@ -61,7 +59,7 @@ if (isSignInWithEmailLink(auth, window.location.href)){
 
     signInWithEmailLink(auth, emailLoggedIn, window.location.href).then((result) => {
 
-        let existing = new Array();
+        let existing = {};
 
         get(ref(db, 'users')).then(doc => {
 
@@ -73,7 +71,7 @@ if (isSignInWithEmailLink(auth, window.location.href)){
 
         })
 
-        existing.push({username : userLoggedIn, email : emailLoggedIn});
+        existing[result.user.uid] = ({username : userLoggedIn, email : emailLoggedIn});
 
         set(ref(db, 'users'), existing);
 
@@ -86,6 +84,8 @@ if (isSignInWithEmailLink(auth, window.location.href)){
 document.getElementById('submit').addEventListener('click', (event) => {
 
     event.preventDefault();
+
+    document.getElementById('submit').style.display = 'none';
 
     const actionCodeSettings = {
 
@@ -115,6 +115,7 @@ document.getElementById('submit').addEventListener('click', (event) => {
     }).catch(err => {
 
         console.warn('Could not send sign in link!' + err.code + err.message);
+        document.getElementById('submit').style.display = 'inline';
 
     })
 
@@ -265,12 +266,12 @@ function encodeImageFile(){
 
 async function addToBaconChat(){
 
-    let username = document.getElementById('username');
+    //let username = document.getElementById('username');
     let text = document.getElementById('baconChatInput');
 
-    console.log(username);
+   // console.log(username);
 
-    let user = username.value.trim();
+  //  let user = username.value.trim();
 
     let chat = text.value.trim();
 
@@ -281,17 +282,17 @@ async function addToBaconChat(){
 
     }
 
-    if (user.length > 25){
+    /*if (user.length > 25){
 
         username.style.borderColor = 'red';
         return;
 
-    }
+    }*/
 
-    username.style.borderColor = '#d69286';
+   // username.style.borderColor = '#d69286';
     text.style.borderColor = '#d69286';
 
-    set(push(baconChat), {chat : chat, name : user || "Anonymous", type : 'text'})
+    set(push(baconChat), {chat : chat, name : localStorage.getItem('') || "Anonymous", type : 'text'})
 
     document.getElementById('baconChatInput').value = '';
     //document.getElementById('baconChatForm').reset()
