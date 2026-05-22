@@ -298,7 +298,7 @@ async function addToBaconChat(){
 
             let username = doc.val()[auth.currentUser.uid].username;
 
-            console.log(username);
+            console.log('double send?')
 
             set(push(baconChat), {chat : chat, name : username || "Anonymous", type : 'text'})
 
