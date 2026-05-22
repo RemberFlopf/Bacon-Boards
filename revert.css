@@ -179,6 +179,7 @@ body{
 }
 
 input:not(#upload) {
+    min-width: 20vw;
     border-radius: 10px;
     outline: none;
     overflow: hidden;

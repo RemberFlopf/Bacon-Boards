@@ -275,7 +275,7 @@ async function addToBaconChat(){
 
     let chat = text.value.trim();
 
-    if (!chat || chat.length > 60){
+    if (!chat || chat.length > 200){
 
         text.style.borderColor = 'red';
         return;
