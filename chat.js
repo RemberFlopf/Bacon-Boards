@@ -292,20 +292,19 @@ async function addToBaconChat(){
    // username.style.borderColor = '#d69286';
     text.style.borderColor = '#d69286';
 
-    let username;
-
     await get(ref(db, 'users')).then(doc => {
 
         if (doc.exists()){
 
-            username = doc.val()[auth.currentUser.uid].username;
+            let username = doc.val()[auth.currentUser.uid].username;
+
+            console.log(username);
+
+            set(push(baconChat), {chat : chat, name : username || "Anonymous", type : 'text'})
 
         }
 
     })
-
-
-    set(push(baconChat), {chat : chat, name : username || "Anonymous", type : 'text'})
 
     document.getElementById('baconChatInput').value = '';
     //document.getElementById('baconChatForm').reset()
