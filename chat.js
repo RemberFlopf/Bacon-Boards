@@ -251,7 +251,9 @@ function encodeImageFile(){
             reader.onloadend = function(){
 
                 fileEncoded = reader.result;
-                set(push(baconChat), {chat : fileEncoded, name : document.getElementById('username').value.trim() || "Anonymous", type : 'image'})
+
+                add(fileEncoded, 'image');
+                //set(push(baconChat), {chat : fileEncoded, name : document.getElementById('username').value.trim() || "Anonymous", type : 'image'})
 
             }
 
@@ -261,6 +263,22 @@ function encodeImageFile(){
 
     })
 
+
+}
+
+async function add(chat, type){
+
+    get(ref(db, 'users')).then(doc => {
+
+        if (doc.exists()){
+
+            let username = doc.val()[auth.currentUser.uid].username;
+
+            set(push(baconChat), {chat : chat, name : username || "Anonymous", type : type})
+
+        }
+
+    })
 
 }
 
@@ -292,17 +310,7 @@ async function addToBaconChat(){
    // username.style.borderColor = '#d69286';
     text.style.borderColor = '#d69286';
 
-    get(ref(db, 'users')).then(doc => {
-
-        if (doc.exists()){
-
-            let username = doc.val()[auth.currentUser.uid].username;
-
-            set(push(baconChat), {chat : chat, name : username || "Anonymous", type : 'text'})
-
-        }
-
-    })
+    add(chat, 'text');
 
     document.getElementById('baconChatInput').value = '';
     //document.getElementById('baconChatForm').reset()
