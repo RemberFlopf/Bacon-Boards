@@ -11,46 +11,39 @@
 
     <button id="back"><a href="index.html">🥓</a></button>
 
+    <div id="loading" class="centre vCentre">
+        <img src="Spinner@1x-1.1s-800px-800px.gif">
+    </div>
+
     <div id="register" class="vCentre centre">
 
         <form id="registerForm">
 
-            <legend>Register to use BaconChat</legend>
+            <legend>Register or sign in to use BaconChat</legend>
 
             <label for="email">Email Address:</label>
-            <input type="email" id="email" required placeholder="E-mail"><br>
+            <input type="email" id="email" placeholder="E-mail" required><br>
             <label for="usernameRegister">Username:</label>
-            <input type="text" id ="usernameRegister" required placeholder="Enter your username"> <br>
+            <input type="text" id ="usernameRegister" placeholder="Enter your username" required maxlength="30"> <br>
 
-            <input type="submit" value="Submit" id="submit">
+            <input type="submit" value="Send me a verification link" id="submit">
 
-            <h2 id="check" style="display: none;">chekc you emails</h2>
+            <h2 id="check" style="display: none;">Check your emails</h2>
 
         </form>
 
     </div>
 
     <div id = 'baconChat' class = 'border'>
-
         <h2 id = 'title' class = 'baconFontText'>Bacon Chat</h2>
-
     </div>
 
     <div class = 'baconChatWrapper'>
-
         <form id="baconChatForm">
-
-
-
             <label for="upload" id="label">🖼️</label>
-            
             <input type="file" id="upload" accept="image/png, image/jpeg, image/webp">
             <input type = 'text' id="baconChatInput" placeholder="What do you have to say about bacon?">
-            <!--<input type = 'submit' id ='baconChatSubmit' value="Say">-->
-            <!--<input type = 'text' id="username" placeholder="Name">-->
-
         </form>
-
     </div>
 
     <script type="module" src="chat.js"></script>

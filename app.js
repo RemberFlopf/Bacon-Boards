@@ -30,14 +30,6 @@ const db = getDatabase(app, "https://chat-app-test-bb975-default-rtdb.asia-south
 
 const messages = ref(db, 'messages')
 
-/*if (!JSON.parse(sessionStorage.getItem('baconSeen'))){
-
-    console.log("no bacon")
-
-    //baconOfDay()    
-
-}*/
-
 onValue(messages, (message) => {
 
     if (message.exists()){
@@ -55,27 +47,6 @@ onValue(messages, (message) => {
     }
 
 })
-
-/*async function baconOfDay(){
-
-    console.log('bacon')
-
-    //sessionStorage.setItem('baconSeen', true);
-
-    let div = document.createElement('div');
-
-    div.innerHTML = `
-
-    <h2>Bacon Of The Day:</h2>
-    
-    <img src = 'bacon-images/bacon-${Math.ceil(Math.random()*9)}.jpg' width = 300em height = 300em>
-
-    `
-
-    document.body.appendChild(div)
-
-
-}*/
 
 let baconTracker = 0;
 
@@ -189,110 +160,7 @@ async function checkDuplicateData(currentData){
 
 }
 
-//Set - adds the thing
-//Messages - thing you are adding to (the folder basically)
-//Push - gives it a random id like a subfolder
-//Change the path like this to set a specific name.
-
-//set((ref(db, 'messages/name')), {'bob' : 'ross'});
-
-//remove well... removes data. You can also just set the data to null. TDLR; Push sucks because it makes data annoying to access. Name your data. 
-
-//remove presumably also returns a promise 
-//im pretty sure 'then' is reserved for promises
-
-/*remove(messages).then(() => {
-
-    console.log("messages deleted!")
-
-}).catch((err) => {
-
-    console.error("uh oh something went wrong")
-
-})*/
-
 document.getElementById('baconForm').addEventListener('submit', (e) => {e.preventDefault(); addToDatabase()})
-
-//Get reads the database but returns a promise
-
-get(messages).then(message => {
-
-    if (message.exists()){
-
-        //console.log(message.val())
-
-    }
-
-}).catch((err) => {
-
-    console.log('Oh No! You suck. Loser. Imagine getting an error. Could not be me.')
-    console.error(err)
-
-})
-
-//Async example
-
-//Basically, async looks more like normal code. Thats literally it. I hate it. 
-
-async function readDatabase(){
-
-    try{
-
-        const message = await get(messages);
-
-        if (message.exists()){
-
-            //console.log(message.val())
-
-        }
-
-        else{
-
-            console.log("Data not found!")
-
-        }
-
-    }
-
-    catch(err){
-
-        // most useful code ive ever written
-
-        throw new Error(err)
-
-    }
-
-}
-
-readDatabase()
-
-let success = Math.random() < 0.5 ? false : true;
-
-const bacon = new Promise((resolve, reject) => {
-
-    if (success){
-
-        resolve('I am become bacon, destroyer of worlds.')
-
-    }
-
-    else{
-
-        reject("Bacon again? Really?")
-
-    }
-
-})
-
-bacon.then((message) => {
-
-    console.log("Success! " + message)
-
-}).catch((message) => {
-
-    console.log('Failure! ' + message)
-
-})
 
 let buttonChoice = null;
 
@@ -328,5 +196,5 @@ async function addToDatabase(){
 
         document.getElementById('baconForm').reset()
 
-    }
+}
 

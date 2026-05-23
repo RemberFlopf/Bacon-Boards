@@ -48,6 +48,11 @@ function logIn(){
 
         }
 
+    }).catch(err => {
+
+        document.querySelector('#loading').style.display = 'none';
+        document.querySelector('#register').style.display = 'flex';
+
     })
 
 }
@@ -80,7 +85,7 @@ if (isSignInWithEmailLink(auth, window.location.href)){
 
 }
 
-document.getElementById('submit').addEventListener('click', (event) => {
+document.getElementById('registerForm').addEventListener('submit', (event) => {
 
     event.preventDefault();
 
@@ -102,11 +107,23 @@ document.getElementById('submit').addEventListener('click', (event) => {
     }
 
     let email = document.querySelector('#email').value.trim();
+    let username = document.querySelector('#usernameRegister')
+    let user = username.value.trim();
+    
+    if (user.length > 30){
+
+        username.style.borderColor = 'red';
+        document.getElementById('submit').style.display = 'inline';
+        return;
+
+    }
+
+    username.style.borderColor = '#d69286';
 
     sendSignInLinkToEmail(auth, email, actionCodeSettings).then(() => {
 
         localStorage.setItem("baconChatEmail", email);
-        localStorage.setItem('baconChatUsername', document.querySelector('#usernameRegister').value.trim());
+        localStorage.setItem('baconChatUsername', user);
 
         console.log('Sent sign in link successfully!')
         document.querySelector('#check').style.display = 'inline';
@@ -125,17 +142,7 @@ let notif = new Audio('./notif.wav');
 
 document.getElementById('baconChatForm').addEventListener('submit', (e) => {e.preventDefault(); addToBaconChat()})
 
-/*document.addEventListener('keyup', (event) => {
-
-    if (event.key === 'Enter'){
-
-        addToBaconChat();
-
-    }
-
-})*/
-
-onChildAdded(query(baconChat, limitToLast(1000)), (message) => {
+onChildAdded(query(baconChat, limitToLast(100)), (message) => {
 
     if (message.exists()){
 
@@ -156,6 +163,7 @@ onChildAdded(query(baconChat, limitToLast(1000)), (message) => {
 function loadRealPage(){
 
     document.querySelector('#register').style.display = 'none';
+    document.querySelector('#loading').style.display = 'none';
     document.querySelectorAll('#baconChat, .baconChatWrapper').forEach(item => {
 
         item.style.display = 'flex';
@@ -165,13 +173,6 @@ function loadRealPage(){
 }
 
 async function updateBaconChat(currentData){
-
-    /*if (currentData.val().name === 'System'){
-
-        remove(currentData.ref);
-        console.log('removing miles hedrick');
-
-    }*/
 
     document.querySelectorAll('.bacon-Chat').forEach(p => p.remove())
 
@@ -219,15 +220,10 @@ async function updateBaconChat(currentData){
 
     }
 
-    //p.classList.add('bacon-ChatA')
     baconChat.appendChild(p)
     baconChat.scrollTop = baconChat.scrollHeight;
 
-    console.log(viewing);
-
     if (!viewing){
-
-        console.log('attemping to play sound')
 
         notif.play();
 
@@ -283,12 +279,7 @@ async function add(chat, type){
 
 async function addToBaconChat(){
 
-    //let username = document.getElementById('username');
     let text = document.getElementById('baconChatInput');
-
-   // console.log(username);
-
-  //  let user = username.value.trim();
 
     let chat = text.value.trim();
 
@@ -299,41 +290,12 @@ async function addToBaconChat(){
 
     }
 
-    /*if (user.length > 25){
-
-        username.style.borderColor = 'red';
-        return;
-
-    }*/
-
-   // username.style.borderColor = '#d69286';
     text.style.borderColor = '#d69286';
 
     add(chat, 'text');
 
     document.getElementById('baconChatInput').value = '';
-    //document.getElementById('baconChatForm').reset()
-
 }
-
-/*async function clearBaconChat(currentData){
-
-    if (Object.keys(currentData.val()).length > ){
-
-        .then(() => {
-
-            alert("Chat too long! Deleting contents...")
-
-        }).catch(() => {
-
-            console.error("Something went wrong. Chat could not be deleted.")
-
-        })
-
-
-    }
-
-}*/
 
 function notfiy(){
 

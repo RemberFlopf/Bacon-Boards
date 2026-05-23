@@ -51,6 +51,7 @@ fieldset div:nth-child(even){
 
 #register{
 
+    display: none;
     width: 100vw;
     height : 100vh;
 
@@ -98,6 +99,7 @@ img{
 
 #back{
 
+    display: none;
     position: absolute;
     padding: 0.5%;
     border-radius: 40%;
@@ -143,6 +145,14 @@ img{
 
 }
 
+#loading{
+
+    width: 100vw;
+    height : 100vh;
+    background-color: #d69286;
+
+}
+
 #baconChat :nth-child(odd):not(b){
 
     background-color:#f2c6ba;
@@ -172,6 +182,7 @@ img{
 }
 
 body{
+    margin: 0;
     background-color: #fdfbee;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
