@@ -172,11 +172,7 @@ function loadRealPage(){
 
     })
 
-    window.addEventListener('load', () => {
-
-        baconChat.scrollTop = baconChat.scrollHeight;
-
-    })
+    setTimeout(() => {baconChat.scrollTop = baconChat.scrollHeight}, 750);
 
 }
 
