@@ -160,7 +160,6 @@ onChildAdded(query(baconChat, limitToLast(100)), (message) => {
 
 })
 
-
 function loadRealPage(){
 
     let baconChat = document.querySelector('#baconChat');
@@ -173,7 +172,11 @@ function loadRealPage(){
 
     })
 
-    baconChat.scrollTop = baconChat.scrollHeight;
+    window.addEventListener('load', () => {
+
+        baconChat.scrollTop = baconChat.scrollHeight;
+
+    })
 
 }
 
