@@ -75,6 +75,7 @@ if (isSignInWithEmailLink(auth, window.location.href)){
 
                 set(ref(db, 'users'), existing);
 
+                console.log('loading frmo email link')
                 loadRealPage();
 
             }
@@ -162,6 +163,8 @@ onChildAdded(query(baconChat, limitToLast(100)), (message) => {
 
 function loadRealPage(){
 
+    let baconChat = document.querySelector('#baconChat');
+
     document.querySelector('#register').style.display = 'none';
     document.querySelector('#loading').style.display = 'none';
     document.querySelectorAll('#baconChat, .baconChatWrapper').forEach(item => {
@@ -170,11 +173,11 @@ function loadRealPage(){
 
     })
 
+    baconChat.scrollTop = baconChat.scrollHeight;
+
 }
 
 async function updateBaconChat(currentData){
-
-    document.querySelectorAll('.bacon-Chat').forEach(p => p.remove())
 
     let baconChat = document.getElementById('baconChat');
     let p = document.createElement('div')
