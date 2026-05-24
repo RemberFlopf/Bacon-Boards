@@ -172,7 +172,7 @@ function loadRealPage(){
 
     })
 
-    setTimeout(() => {baconChat.scrollTop = baconChat.scrollHeight}, 750);
+    setTimeout(() => {baconChat.scrollTop = baconChat.scrollHeight}, 500);
 
 }
 
@@ -285,7 +285,7 @@ async function addToBaconChat(){
 
     let chat = text.value.trim();
 
-    if (!chat || chat.length > 200){
+    if (!chat || chat.length > 240){
 
         text.style.borderColor = 'red';
         return;
