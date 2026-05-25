@@ -285,7 +285,7 @@ async function add(chat, type){
 
                         doc.forEach(obj => {
 
-                            if (obj.name.toLowerCase() === username.toLowerCase()){
+                            if (obj.val().name.toLowerCase() === username.toLowerCase()){
 
                                 count++;
 
