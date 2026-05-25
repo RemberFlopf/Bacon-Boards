@@ -39,9 +39,8 @@ function logIn(){
 
             let user = doc.val()[auth.currentUser.uid];
 
-            if (user.username === userLoggedIn && user.email === emailLoggedIn){
+            if (user.username.toLowerCase() === userLoggedIn.toLowerCase() && user.email.toLowerCase() === emailLoggedIn.toLowerCase()){
 
-                console.log('logged in yay');
                 loadRealPage();
 
             }
@@ -52,6 +51,9 @@ function logIn(){
 
         document.querySelector('#loading').style.display = 'none';
         document.querySelector('#register').style.display = 'flex';
+
+        loadRealPage();
+
 
     })
 
@@ -139,6 +141,7 @@ document.getElementById('registerForm').addEventListener('submit', (event) => {
 })
 
 let viewing = true;
+let spamming = false;
 let notif = new Audio('./notif.wav');
 
 document.getElementById('baconChatForm').addEventListener('submit', (e) => {e.preventDefault(); addToBaconChat()})
@@ -270,8 +273,39 @@ async function add(chat, type){
         if (doc.exists()){
 
             let username = doc.val()[auth.currentUser.uid].username;
+            let count = 0;
 
             set(push(baconChat), {chat : chat, name : username || "Anonymous", type : type})
+
+            if (Math.random() < 0.3){
+
+                get(query(baconChat, limitToLast(10))).then(doc => {
+
+                    if (doc.exists()){
+
+                        doc.forEach(obj => {
+
+                            if (obj.name.toLowerCase() === username.toLowerCase()){
+
+                                count++;
+
+                            }
+
+                        })
+
+                        if (count === 10){
+   
+                            const opts = ["Dude genuinely who are you even talking to", 'bro literally no one cares', 'pls shut up'];
+
+                            set(push(baconChat), {chat : opts[Math.floor(Math.random()*opts.length)], username : 'Plinkes', type : 'text'});
+
+
+                        }
+                    }
+
+                })
+
+            }
 
         }
 
@@ -279,18 +313,32 @@ async function add(chat, type){
 
 }
 
+let spammer;
+
 async function addToBaconChat(){
 
     let text = document.getElementById('baconChatInput');
 
+    clearTimeout(spammer);
+
+    spammer = setTimeout(() => {
+
+        console.log('disabling spam')
+        spamming = false;
+
+    }, 800)
+
     let chat = text.value.trim();
 
-    if (!chat || chat.length > 240){
+    if (!chat || chat.length > 240 || spamming){
 
+        spamming = true;
         text.style.borderColor = 'red';
         return;
 
     }
+
+    spamming = true;
 
     text.style.borderColor = '#d69286';
 
