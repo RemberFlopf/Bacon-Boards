@@ -277,7 +277,7 @@ async function add(chat, type){
 
             set(push(baconChat), {chat : chat, name : username || "Anonymous", type : type})
 
-            if (Math.random() < 0.3){
+            if (Math.random() < 0.1){
 
                 get(query(baconChat, limitToLast(10))).then(doc => {
 
@@ -297,7 +297,7 @@ async function add(chat, type){
    
                             const opts = ["Dude genuinely who are you even talking to", 'bro literally no one cares', 'pls shut up'];
 
-                            set(push(baconChat), {chat : opts[Math.floor(Math.random()*opts.length)], username : 'Plinkes', type : 'text'});
+                            set(push(baconChat), {chat : opts[Math.floor(Math.random()*opts.length)], name : 'Plinkes', type : 'text'});
 
 
                         }
