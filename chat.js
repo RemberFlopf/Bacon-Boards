@@ -2,8 +2,56 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebas
 import { getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink  } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
 import { getDatabase, ref, push, set, get, remove, onValue, onChildAdded, limitToLast, query } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
 
+const configFirebase = {
 
-const firebaseConfig = {
+    apiKey: "VHaWpah16pihrz7CuQZtkBywRyEziR3EiD5VDra",
+
+    authDomain: "chat-app-test-bb975.firebaseapp.com",
+
+    projectId: "chat-app-test-bb975",
+
+    storageBucket: "chat-app-test-bb975.firebasestorage.app",
+
+    messagingSenderId: "66794630272",
+
+    appId: "1:66794630272:web:8a49c45d6194df5af68a65"
+
+}
+
+const fireconfig = {
+
+    apiKey: "hM0UNdGZ5Z5GLyg7gGh0WNinuXPYDwzw9JcHwWW",
+
+    authDomain: "chat-app-test-bb975.firebaseapp.com",
+
+    projectId: "chat-app-test-bb975",
+
+    storageBucket: "chat-app-test-bb975.firebasestorage.app",
+
+    messagingSenderId: "66794630272",
+
+    appId: "1:66794630272:web:8a49c45d6194df5af68a65"  
+
+}
+
+const config = {
+
+    apiKey: "d8WLNriqxuf24PW5CSpfq7yhc1gy7YBYuqScGUF",
+
+    authDomain: "chat-app-test-bb975.firebaseapp.com",
+
+    projectId: "chat-app-test-bb975",
+
+    storageBucket: "chat-app-test-bb975.firebasestorage.app",
+
+    messagingSenderId: "66794630272",
+
+    appId: "1:66794630272:web:8a49c45d6194df5af68a65"
+
+};
+
+
+const conf = {
 
     apiKey: "AIzaSyC9Eos8fKKu8Dmtj6XVW0yMLLQ9CJsw0E4",
 
@@ -19,7 +67,7 @@ const firebaseConfig = {
 
 };
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(conf);
 
 const db = getDatabase(app, "wss://chat-app-test-bb975-default-rtdb.asia-southeast1.firebasedatabase.app/");
 
@@ -51,8 +99,6 @@ function logIn(){
 
         document.querySelector('#loading').style.display = 'none';
         document.querySelector('#register').style.display = 'flex';
-
-        loadRealPage();
 
     })
 
@@ -345,7 +391,7 @@ function encodeImageFile(){
                     let p = document.createElement('div');
                     let baconChat = document.querySelector('#baconChat');
 
-                    addText(p, 'BaconChat', 'File @size too large! \r')
+                    addText(p, 'BaconChat', 'File size too large! \r')
 
                     baconChat.appendChild(p)
                     baconChat.scrollTop = baconChat.scrollHeight;
