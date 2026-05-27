@@ -296,7 +296,7 @@ async function updateBaconChat(currentData){
 
             if (doc.exists()){
 
-                let user = doc.val()[auth.currentUser.uid];
+                let user = doc.val()[auth.currentUser.uid].username;
 
                 if (p.textContent.toLowerCase().includes('@'+user.toLowerCase())){
 
