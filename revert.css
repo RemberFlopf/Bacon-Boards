@@ -131,6 +131,12 @@ img{
 
 }
 
+.ping{
+
+    color: blue;
+
+}
+
 .baconChatWrapper{
 
     display: none;
@@ -154,7 +160,7 @@ img{
 
 }
 
-#baconChat :nth-child(odd):not(b){
+#baconChat :nth-child(odd):not(b, p){
 
     background-color:#f2c6ba;
 
