@@ -100,6 +100,8 @@ function logIn(){
         document.querySelector('#loading').style.display = 'none';
         document.querySelector('#register').style.display = 'flex';
 
+        loadRealPage();
+
     })
 
 }
@@ -210,6 +212,27 @@ onChildAdded(query(baconChat, limitToLast(100)), (message) => {
 
 })
 
+async function getOnlineUserList(){
+
+    let userList = new Array();
+
+    await get(ref(db, 'users')).then((doc) => {
+
+        if (doc.exists()){
+
+            doc.forEach(user => {
+
+                userList.push(user.val().username);
+
+            })
+        }
+
+    })
+
+    return userList;
+
+}
+
 function loadRealPage(){
 
     let baconChat = document.querySelector('#baconChat');
@@ -240,37 +263,57 @@ function addText(p, user, chat){
     let name = document.createElement('b');
     let text = document.createElement('p');
 
+    text.textContent = chat;
+
     if (chat.includes('@')){
 
-        for (let [i, word] of chat.split(' ').entries()){
+        getOnlineUserList().then(res => {
 
-            if (word.includes('@')){
+            let users = res.map(u => u.toLowerCase());
 
-                let at = document.createElement('span');
+            users.forEach(user => {
 
-                at.classList.add('ping');
+                let pingAt = '@' + user;
 
-                at.textContent = word + ' ';
-                text.appendChild(at);
+                if (chat.toLowerCase().includes(pingAt)){
 
-            }
+                    text.textContent = '';
+                    
+                    //regex is the worst thing ever invented and why does split not just have an option to keep the delimiter 
 
-            else{
+                    for (let [i, word] of chat.split(new RegExp(`(${pingAt})`, 'g')).entries()){
 
-                let p = document.createElement('p');
-                p.style.display = 'inline';
-                p.textContent = word + ' ';
+                        if ((word.includes('@'))){
 
-                text.appendChild(p);
+                            let at = document.createElement('span');
 
-            }
+                            at.classList.add('ping');
 
-        }
+                            at.textContent = word + ' ';
+                            text.appendChild(at);
+
+                        }
+
+                        else{
+
+                            let p = document.createElement('p');
+                            p.style.display = 'inline';
+                            p.textContent = word + ' ';
+
+                            text.appendChild(p);
+
+                        }
+
+                    }
+
+                }
+
+            })
+            
+        });
 
     }
 
-
-    else text.textContent = chat;
     text.style.display = 'inline';
     name.style.display = 'inline';
 
@@ -284,6 +327,96 @@ function addText(p, user, chat){
 
     p.appendChild(name);
     p.appendChild(text);
+
+}
+
+async function timeDifference(div, time){
+
+    const months = {
+
+        'jan' : 1,
+        'feb' : 2,
+        'mar' : 3,
+        'apr' : 4,
+        'may' : 5,
+        'jun' : 6,
+        'jul' : 7,
+        'aug' : 8,
+        'sep' : 9,
+        'oct' : 10,
+        'nov' : 11,
+        'dec' : 12,
+
+    }
+
+    let timeDiff = '';
+    let currentDate = new Date().toString().toLowerCase().split(' ');
+
+    let testTime = time[4].split(':');
+    testTime = testTime[0] +":"+ testTime[1]
+
+    if (time[3] < currentDate[3]){
+
+        timeDiff = (currentDate[3] - time[3]) + ' years ago';
+
+    }
+
+    else if (months[time[1]] < months[currentDate[1]]){
+
+        timeDiff = (months[currentDate[1]] - months[time[1]]) + ' months ago';
+
+    }
+
+    else if (time[2] < currentDate[2]){
+
+        timeDiff = (currentDate[2] - time[2]) + ' days ago';
+
+    }
+
+    else {
+
+        let exactTime = currentDate[4].split(':')
+        let sendTime = time[4].split(':');
+
+        if (sendTime[0] < exactTime[0]){
+
+            timeDiff = (exactTime[0] - sendTime[0]) + ' hour'+(exactTime[0]-sendTime[0]>1?'s':'')+' ago';
+
+        }
+
+        else if (sendTime[1] < exactTime[1]){
+
+            timeDiff = (exactTime[1] - sendTime[1]) + ' minute'+(exactTime[1]-sendTime[1]>1?'s':'')+' ago';
+
+
+        }
+
+        else if (sendTime[2] < exactTime[2]){
+
+            timeDiff = (exactTime[2] - sendTime[2]) + ' second'+(exactTime[2]-sendTime[2]>1?'s':'')+' ago';
+
+        }
+
+    }
+
+    let timeText = document.createElement('p');
+
+    timeText.classList.add('time');
+    timeText.textContent = timeDiff;
+
+    div.addEventListener('mouseenter', () => {
+
+        timeText.textContent = testTime;
+
+    })
+
+    div.addEventListener('mouseleave', () => {
+
+        timeText.textContent = timeDiff;
+
+    })
+
+    div.appendChild(timeText);
 
 }
 
@@ -333,6 +466,8 @@ async function updateBaconChat(currentData){
 
     }
 
+    timeDifference(p, currentData.val().time.toLowerCase().split(' '));
+
     baconChat.appendChild(p)
     baconChat.scrollTop = baconChat.scrollHeight;
 
@@ -364,6 +499,46 @@ async function updateBaconChat(currentData){
 
 }
 
+function imgEncode(){
+
+    let file = upload?.files?.[0];
+
+    if (typeof file !== 'undefined'){
+
+        let reader = new FileReader();
+        reader.onloadend = function(){
+
+            fileEncoded = reader.result;
+
+            if (fileEncoded.length < 5000000){
+
+                add(fileEncoded, file.type.split('/')[0]);
+
+            }
+
+            else{
+
+                let p = document.createElement('div');
+                let baconChat = document.querySelector('#baconChat');
+                addText(p, 'BaconChat', 'File size too large! \r')
+
+                baconChat.appendChild(p)
+                baconChat.scrollTop = baconChat.scrollHeight;
+
+
+            }
+
+            //set(push(baconChat), {chat : fileEncoded, name : document.getElementById('username').value.trim() || "Anonymous", type : 'image'})
+
+        }
+
+        reader.readAsDataURL(file);
+
+    }
+
+
+}
+
 function encodeImageFile(){
 
     let upload = document.querySelector('#upload');
@@ -371,44 +546,9 @@ function encodeImageFile(){
 
     upload.addEventListener('change', () => {
 
-        let file = upload?.files?.[0];
-
-        if (typeof file !== 'undefined'){
-
-            let reader = new FileReader();
-            reader.onloadend = function(){
-
-                fileEncoded = reader.result;
-
-                if (fileEncoded.length < 5000000){
-
-                    add(fileEncoded, file.type.split('/')[0]);
-
-                }
-
-                else{
-
-                    let p = document.createElement('div');
-                    let baconChat = document.querySelector('#baconChat');
-
-                    addText(p, 'BaconChat', 'File size too large! \r')
-
-                    baconChat.appendChild(p)
-                    baconChat.scrollTop = baconChat.scrollHeight;
-
-
-                }
-
-                //set(push(baconChat), {chat : fileEncoded, name : document.getElementById('username').value.trim() || "Anonymous", type : 'image'})
-
-            }
-
-            reader.readAsDataURL(file);
-
-        }
-
+        imgEncode();
+       
     })
-
 
 }
 
@@ -469,10 +609,9 @@ async function addToBaconChat(){
 
     spammer = setTimeout(() => {
 
-        console.log('disabling spam')
         spamming = false;
 
-    }, 800)
+    }, 1000)
 
     let chat = text.value.trim();
 
